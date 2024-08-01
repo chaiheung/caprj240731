@@ -39,6 +39,10 @@ public class BoardService {
         return mapper.selectById(id);
     }
 
+    public void edit(BoardDTO board) {
+        mapper.update(board);
+    }
+
     public void remove(Integer id) {
         mapper.deleteById(id);
     }
