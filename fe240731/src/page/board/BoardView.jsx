@@ -97,7 +97,7 @@ export function BoardView() {
       <Box>
         <Button
           colorScheme={"purple"}
-          onClick={() => navigate(`/edit/${board.id}`)}
+          onClick={() => navigate(`/board/edit/${board.id}`)}
         >
           수정
         </Button>
