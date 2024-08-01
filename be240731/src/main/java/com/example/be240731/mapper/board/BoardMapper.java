@@ -1,6 +1,7 @@
 package com.example.be240731.mapper.board;
 
 import com.example.be240731.dto.board.BoardDTO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -29,4 +30,10 @@ public interface BoardMapper {
             WHERE id = #{id}
             """)
     BoardDTO selectById(Integer id);
+
+    @Delete("""
+            DELETE FROM board
+            WHERE id = #{id}
+            """)
+    int deleteById(Integer id);
 }
