@@ -6,7 +6,20 @@ import { LoginContext } from "./LoginProvider";
 
 export function Navbar() {
   const navigate = useNavigate();
-  const { memberInfo } = useContext(LoginContext);
+  const { memberInfo, setMemberInfo } = useContext(LoginContext);
+
+  const handleLogout = () => {
+    setMemberInfo(null);
+    navigate("/member/login");
+  };
+
+  const handleClickLogo = () => {
+    if (memberInfo) {
+      navigate("/board/list");
+    } else {
+      navigate("/");
+    }
+  };
 
   return (
     <Box w="full" bg="blue.600" boxShadow="lg" py={4} px={6}>
@@ -24,7 +37,7 @@ export function Navbar() {
           alt="Write"
           height="30vh"
           width="auto"
-          onClick={() => navigate("/")}
+          onClick={handleClickLogo}
           cursor="pointer"
           _hover={{ opacity: 0.8 }}
           className="transition duration-300 ease-in-out"
@@ -37,15 +50,6 @@ export function Navbar() {
           {memberInfo ? (
             <>
               <Text
-                onClick={() => navigate("/board/list")}
-                cursor="pointer"
-                _hover={{ color: "yellow.400" }}
-                fontWeight="semibold"
-                fontSize="lg"
-              >
-                목록
-              </Text>
-              <Text
                 onClick={() => navigate("/board/write")}
                 cursor="pointer"
                 _hover={{ color: "yellow.400" }}
@@ -53,6 +57,15 @@ export function Navbar() {
                 fontSize="lg"
               >
                 글쓰기
+              </Text>
+              <Text
+                onClick={handleLogout}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                로그아웃
               </Text>
             </>
           ) : (
