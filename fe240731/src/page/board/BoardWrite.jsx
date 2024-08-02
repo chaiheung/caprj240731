@@ -21,7 +21,7 @@ export function BoardWrite() {
   const toast = useToast();
   const navigate = useNavigate();
 
-  function handleSaveClick() {
+  function handleClickSave() {
     setLoading(true);
     axios
       .post("/api/board/create", {
@@ -49,7 +49,7 @@ export function BoardWrite() {
       .finally(() => setLoading(false));
   }
 
-  const disableSaveButton = !title.trim() || !content.trim() || !writer.trim();
+  const isFormValid = title.trim() && content.trim() && writer.trim();
 
   return (
     <Center mt={5}>
@@ -71,11 +71,16 @@ export function BoardWrite() {
             <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
           </FormControl>
           <Button
+            mt={5}
+            width={"100%"}
             isLoading={loading}
-            isDisabled={disableSaveButton}
+            isDisabled={!isFormValid}
+            cursor={!isFormValid ? "not-allowed" : "pointer"}
             colorScheme="blue"
-            onClick={handleSaveClick}
-            width="100%"
+            _hover={
+              !isFormValid ? {} : { bgColor: "blue.600 ", color: "yellow.400" }
+            }
+            onClick={handleClickSave}
           >
             저장
           </Button>

@@ -38,7 +38,7 @@ export function BoardEdit() {
       .then(() => {
         toast({
           status: "success",
-          description: `${board.id}번 게시물이 수정되었습니다.`,
+          description: `게시물이 수정되었습니다.`,
           position: "top",
           duration: 3000,
         });
