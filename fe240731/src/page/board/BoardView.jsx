@@ -49,7 +49,7 @@ export function BoardView() {
       .then(() => {
         toast({
           status: "success",
-          description: `${id}번 게시물이 삭제되었습니다.`,
+          description: `해당 게시물이 삭제되었습니다.`,
           position: "top",
           duration: 3000,
         });
@@ -58,7 +58,7 @@ export function BoardView() {
       .catch(() => {
         toast({
           status: "error",
-          description: `${id}번 게시물 삭제 중 오류가 발생하였습니다.`,
+          description: `해당 게시물 삭제 중 오류가 발생하였습니다.`,
           position: "top",
           duration: 3000,
         });
@@ -82,7 +82,6 @@ export function BoardView() {
             {board.title}
           </Text>
           <Flex direction="column" align="flex-end">
-            <Text>작성자: {board.writer}</Text>
             <Text>
               {" "}
               {new Date(board.inserted).toLocaleString("ko-KR", {

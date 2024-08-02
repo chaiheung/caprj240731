@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ export function BoardWrite() {
       .post("/api/board/create", {
         title,
         content,
-        writer,
       })
       .then(() => {
         toast({
@@ -49,7 +47,7 @@ export function BoardWrite() {
       .finally(() => setLoading(false));
   }
 
-  const isFormValid = title.trim() && content.trim() && writer.trim();
+  const isFormValid = title.trim() && content.trim();
 
   return (
     <Center mt={5}>
@@ -65,10 +63,6 @@ export function BoardWrite() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>작성자</FormLabel>
-            <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
           </FormControl>
           <Button
             mt={5}
