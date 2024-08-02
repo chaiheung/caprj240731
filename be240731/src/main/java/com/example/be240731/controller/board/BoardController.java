@@ -1,6 +1,6 @@
 package com.example.be240731.controller.board;
 
-import com.example.be240731.dto.board.BoardDTO;
+import com.example.be240731.dto.board.Board;
 import com.example.be240731.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class BoardController {
     private final BoardService service;
 
     @PostMapping("create")
-    public ResponseEntity create(@RequestBody BoardDTO board) {
+    public ResponseEntity create(@RequestBody Board board) {
         if (service.validate(board)) {
             service.create(board);
             return ResponseEntity.ok().build();
@@ -26,13 +26,13 @@ public class BoardController {
     }
 
     @GetMapping("list")
-    public List<BoardDTO> list() {
+    public List<Board> list() {
         return service.list();
     }
 
     @GetMapping("{id}")
     public ResponseEntity get(@PathVariable Integer id) {
-        BoardDTO board = service.get(id);
+        Board board = service.get(id);
 
         if (board == null) {
             return ResponseEntity.notFound().build();
@@ -41,7 +41,7 @@ public class BoardController {
     }
 
     @PutMapping("edit")
-    public ResponseEntity update(@RequestBody BoardDTO board) {
+    public ResponseEntity update(@RequestBody Board board) {
         if (service.validate(board)) {
             service.update(board);
             return ResponseEntity.ok().build();

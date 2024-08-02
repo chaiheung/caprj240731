@@ -1,6 +1,6 @@
 package com.example.be240731.service.board;
 
-import com.example.be240731.dto.board.BoardDTO;
+import com.example.be240731.dto.board.Board;
 import com.example.be240731.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ import java.util.List;
 public class BoardService {
     private final BoardMapper mapper;
 
-    public void create(BoardDTO board) {
+    public void create(Board board) {
         mapper.insert(board);
     }
 
-    public boolean validate(BoardDTO board) {
+    public boolean validate(Board board) {
         if (board.getTitle() == null || board.getTitle().isBlank()) {
             return false;
         }
@@ -31,15 +31,15 @@ public class BoardService {
         return true;
     }
 
-    public List<BoardDTO> list() {
+    public List<Board> list() {
         return mapper.selectAll();
     }
 
-    public BoardDTO get(Integer id) {
+    public Board get(Integer id) {
         return mapper.selectById(id);
     }
 
-    public void update(BoardDTO board) {
+    public void update(Board board) {
         mapper.update(board);
     }
 

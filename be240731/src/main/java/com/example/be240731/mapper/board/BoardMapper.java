@@ -1,6 +1,6 @@
 package com.example.be240731.mapper.board;
 
-import com.example.be240731.dto.board.BoardDTO;
+import com.example.be240731.dto.board.Board;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -12,21 +12,21 @@ public interface BoardMapper {
             INSERT INTO board (title, content, writer)
             VALUES (#{title}, #{content}, #{writer})
             """)
-    int insert(BoardDTO board);
+    int insert(Board board);
 
     @Select("""
             SELECT id, title, writer
             FROM board
             ORDER BY id DESC
             """)
-    List<BoardDTO> selectAll();
+    List<Board> selectAll();
 
     @Select("""
             SELECT *
             FROM board
             WHERE id = #{id}
             """)
-    BoardDTO selectById(Integer id);
+    Board selectById(Integer id);
 
     @Update("""
             UPDATE board
@@ -35,7 +35,7 @@ public interface BoardMapper {
                 writer=#{writer}
             WHERE id=#{id}
             """)
-    int update(BoardDTO board);
+    int update(Board board);
 
     @Delete("""
             DELETE FROM board
