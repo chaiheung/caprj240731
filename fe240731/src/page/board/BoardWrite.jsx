@@ -36,7 +36,7 @@ export function BoardWrite() {
           position: "top",
           duration: 3000,
         });
-        navigate("/");
+        navigate("/board/list");
       })
       .catch((e) => {
         toast({
