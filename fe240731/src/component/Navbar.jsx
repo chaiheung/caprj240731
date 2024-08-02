@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import writeImage from "../../public/img/writelogo.png";
+import { LoginContext } from "./LoginProvider";
 
 export function Navbar() {
   const navigate = useNavigate();
+  const { memberInfo } = useContext(LoginContext);
 
   return (
     <Box w="full" bg="blue.600" boxShadow="lg" py={4} px={6}>
@@ -32,24 +34,38 @@ export function Navbar() {
           spacing={8}
           className="transition duration-300 ease-in-out"
         >
-          <Text
-            onClick={() => navigate("/board/list")}
-            cursor="pointer"
-            _hover={{ color: "yellow.400" }}
-            fontWeight="semibold"
-            fontSize="lg"
-          >
-            목록
-          </Text>
-          <Text
-            onClick={() => navigate("/board/write")}
-            cursor="pointer"
-            _hover={{ color: "yellow.400" }}
-            fontWeight="semibold"
-            fontSize="lg"
-          >
-            글쓰기
-          </Text>
+          {memberInfo ? (
+            <>
+              <Text
+                onClick={() => navigate("/board/list")}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                목록
+              </Text>
+              <Text
+                onClick={() => navigate("/board/write")}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                글쓰기
+              </Text>
+            </>
+          ) : (
+            <Text
+              onClick={() => navigate("/member/login")}
+              cursor="pointer"
+              _hover={{ color: "yellow.400" }}
+              fontWeight="semibold"
+              fontSize="lg"
+            >
+              로그인
+            </Text>
+          )}
         </HStack>
       </Flex>
     </Box>
