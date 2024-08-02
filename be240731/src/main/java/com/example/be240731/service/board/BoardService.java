@@ -39,11 +39,11 @@ public class BoardService {
         return mapper.selectById(id);
     }
 
-    public void edit(BoardDTO board) {
+    public void update(BoardDTO board) {
         mapper.update(board);
     }
 
-    public void remove(Integer id) {
+    public void delete(Integer id) {
         mapper.deleteById(id);
     }
 }

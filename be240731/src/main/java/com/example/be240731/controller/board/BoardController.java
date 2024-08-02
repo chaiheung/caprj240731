@@ -43,7 +43,7 @@ public class BoardController {
     @PutMapping("edit")
     public ResponseEntity update(@RequestBody BoardDTO board) {
         if (service.validate(board)) {
-            service.edit(board);
+            service.update(board);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
@@ -52,6 +52,6 @@ public class BoardController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Integer id) {
-        service.remove(id);
+        service.delete(id);
     }
 }
