@@ -1,9 +1,7 @@
-import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Center, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { faUserPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
@@ -14,28 +12,22 @@ export function BoardList() {
   }, []);
 
   return (
-    <Box>
-      <Box>게시물 목록</Box>
-      <Box>
-        <Table>
+    <Center mt={5}>
+      <Box w={800} p={6} boxShadow="lg" borderRadius="md" bg="white">
+        <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>#</Th>
+              <Th>NO.</Th>
               <Th>TITLE</Th>
-              <Th>
-                <FontAwesomeIcon icon={faUserPen} />
-              </Th>
+              <Th>WRITER</Th>
             </Tr>
           </Thead>
           <Tbody>
             {boardList.map((board) => (
               <Tr
-                _hover={{
-                  bgColor: "gray.200",
-                }}
-                cursor={"pointer"}
-                onClick={() => navigate(`/board/${board.id}`)}
                 key={board.id}
+                _hover={{ bgColor: "gray.100", cursor: "pointer" }}
+                onClick={() => navigate(`/board/${board.id}`)}
               >
                 <Td>{board.id}</Td>
                 <Td>{board.title}</Td>
@@ -45,6 +37,6 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
-    </Box>
+    </Center>
   );
 }

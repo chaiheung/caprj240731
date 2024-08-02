@@ -1,12 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
+  Center,
+  Flex,
+  IconButton,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,10 +11,15 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
   Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export function BoardView() {
   const { id } = useParams();
@@ -31,16 +33,15 @@ export function BoardView() {
       .get(`/api/board/${id}`)
       .then((res) => setBoard(res.data))
       .catch((err) => {
-        if (err.response.status === 404) {
-          toast({
-            status: "info",
-            description: "해당 게시물이 존재하지 않습니다.",
-            position: "top",
-          });
-          navigate("/");
-        }
+        toast({
+          status: "info",
+          description: "해당 게시물이 존재하지 않습니다.",
+          position: "top",
+          duration: 3000,
+        });
+        navigate("/");
       });
-  }, []);
+  }, [id, navigate, toast]);
 
   function handleClickRemove() {
     axios
@@ -50,6 +51,7 @@ export function BoardView() {
           status: "success",
           description: `${id}번 게시물이 삭제되었습니다.`,
           position: "top",
+          duration: 3000,
         });
         navigate("/");
       })
@@ -58,67 +60,78 @@ export function BoardView() {
           status: "error",
           description: `${id}번 게시물 삭제 중 오류가 발생하였습니다.`,
           position: "top",
+          duration: 3000,
         });
       })
-      .finally(() => {
-        onClose();
-      });
+      .finally(() => onClose());
   }
 
   if (board === null) {
-    return <Spinner />;
+    return (
+      <Center mt={5}>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (
-    <Box>
-      <Box>{board.id}번 게시물</Box>
-      <Box>
-        <FormControl>
-          <FormLabel>제목</FormLabel>
-          <Input value={board.title} readOnly />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <FormLabel>본문</FormLabel>
-          <Textarea value={board.content} readOnly />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <FormLabel>작성자</FormLabel>
-          <Input value={board.writer} readOnly />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>작성일시</FormControl>
-        <Input type={"datetime-local"} value={board.inserted} readOnly />
-      </Box>
-      <Box>
-        <Button
-          colorScheme={"purple"}
-          onClick={() => navigate(`/board/edit/${board.id}`)}
-        >
-          수정
-        </Button>
-        <Button colorScheme={"red"} onClick={onOpen}>
-          삭제
-        </Button>
+    <Center mt={5}>
+      <Box w={600} p={6} boxShadow="lg" borderRadius="md" bg="white">
+        <Flex justify="space-between" mb={4}>
+          <Text fontSize="2xl" fontWeight="bold">
+            {board.title}
+          </Text>
+          <Flex direction="column" align="flex-end">
+            <Text>작성자: {board.writer}</Text>
+            <Text>
+              {" "}
+              {new Date(board.inserted).toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              })}
+            </Text>
+          </Flex>
+        </Flex>
+        <Textarea value={board.content} readOnly size="sm" mb={4} />
+        <Flex justify="flex-end">
+          <IconButton
+            icon={<FaPencilAlt />}
+            onClick={() => navigate(`/board/edit/${board.id}`)}
+            aria-label="Edit post"
+            variant="ghost"
+            size="lg"
+            colorScheme="blue"
+            mr={2}
+          />
+          <IconButton
+            icon={<FaTrash />}
+            onClick={onOpen}
+            aria-label="Delete post"
+            variant="ghost"
+            size="lg"
+            colorScheme="red"
+          />
+        </Flex>
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalBody>삭제하시겠습니까?</ModalBody>
+          <ModalHeader>게시물 삭제</ModalHeader>
+          <ModalBody>정말로 삭제하시겠습니까?</ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
-            <Button colorScheme={"red"} onClick={handleClickRemove}>
+            <Button onClick={handleClickRemove} colorScheme="red" ml={3}>
               확인
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Center>
   );
 }

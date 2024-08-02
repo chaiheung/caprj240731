@@ -1,9 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
   Input,
@@ -17,7 +15,11 @@ import {
   Textarea,
   useDisclosure,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export function BoardEdit() {
   const { id } = useParams();
@@ -28,87 +30,83 @@ export function BoardEdit() {
 
   useEffect(() => {
     axios.get(`/api/board/${id}`).then((res) => setBoard(res.data));
-  }, []);
+  }, [id]);
 
   function handleClickSave() {
     axios
-      .put("/api/board/edit", board)
+      .put(`/api/board/edit`, board)
       .then(() => {
         toast({
           status: "success",
           description: `${board.id}번 게시물이 수정되었습니다.`,
           position: "top",
+          duration: 3000,
         });
         navigate(`/board/${board.id}`);
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          toast({
-            status: "error",
-            description: `게시물이 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
-            position: "top",
-          });
-        }
+        toast({
+          status: "error",
+          description: `게시물이 수정되지 않았습니다. 작성한 내용을 확인해주세요.`,
+          position: "top",
+          duration: 3000,
+        });
       })
-      .finally(() => {
-        onClose();
-      });
+      .finally(() => onClose());
   }
 
   if (board === null) {
-    return <Spinner />;
+    return (
+      <Center mt={5}>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (
-    <Box>
-      <Box>{board.id}번 게시물 수정</Box>
-      <Box>
-        <Box>
+    <Center mt={5}>
+      <Box w={500} p={6} boxShadow="lg" borderRadius="md" bg="white">
+        <VStack spacing={4}>
           <FormControl>
             <FormLabel>제목</FormLabel>
             <Input
-              defaultValue={board.title}
+              value={board.title}
               onChange={(e) => setBoard({ ...board, title: e.target.value })}
             />
           </FormControl>
-        </Box>
-        <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea
-              defaultValue={board.content}
+              value={board.content}
               onChange={(e) => setBoard({ ...board, content: e.target.value })}
-            ></Textarea>
+            />
           </FormControl>
-        </Box>
-        <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input
-              defaultValue={board.writer}
+              value={board.writer}
               onChange={(e) => setBoard({ ...board, writer: e.target.value })}
             />
           </FormControl>
-        </Box>
-        <Box>
-          <Button colorScheme={"blue"} onClick={onOpen}>
+          <Button colorScheme="blue" onClick={onOpen} width="100%">
             저장
           </Button>
-        </Box>
+        </VStack>
       </Box>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalBody>저장하시겠습니까?</ModalBody>
+          <ModalHeader>게시물 수정</ModalHeader>
+          <ModalBody>변경된 내용을 저장하시겠습니까?</ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
-            <Button onClick={handleClickSave} colorScheme={"blue"}>
-              확인
+            <Button onClick={handleClickSave} colorScheme="blue" ml={3}>
+              저장
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Center>
   );
 }

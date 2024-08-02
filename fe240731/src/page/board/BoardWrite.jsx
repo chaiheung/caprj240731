@@ -1,11 +1,13 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
   Input,
   Textarea,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
@@ -32,67 +34,53 @@ export function BoardWrite() {
           description: "새 글이 등록되었습니다.",
           status: "success",
           position: "top",
+          duration: 3000,
         });
         navigate("/");
       })
       .catch((e) => {
-        const code = e.response.status;
-
-        if (code === 400) {
-          toast({
-            status: "error",
-            description: "등록되지 않았습니다. 입력한 내용을 확인하세요.",
-            position: "top",
-          });
-        }
+        toast({
+          status: "error",
+          description: "등록되지 않았습니다. 입력한 내용을 확인하세요.",
+          position: "top",
+          duration: 3000,
+        });
       })
       .finally(() => setLoading(false));
   }
 
-  let disableSaveButton = false;
-  if (title.trim().length === 0) {
-    disableSaveButton = true;
-  }
-  if (content.trim().length === 0) {
-    disableSaveButton = true;
-  }
-  if (writer.trim().length === 0) {
-    disableSaveButton = true;
-  }
+  const disableSaveButton = !title.trim() || !content.trim() || !writer.trim();
 
   return (
-    <Box>
-      <Box>글 작성 화면</Box>
-      <Box>
-        <Box>
-          <FormControl>
+    <Center mt={5}>
+      <Box w={500} p={6} boxShadow="lg" borderRadius="md" bg="white">
+        <VStack spacing={4}>
+          <FormControl isRequired>
             <FormLabel>제목</FormLabel>
-            <Input onChange={(e) => setTitle(e.target.value)} />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
-        </Box>
-        <Box>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>본문</FormLabel>
-            <Textarea onChange={(e) => setContent(e.target.value)} />
+            <Textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </FormControl>
-        </Box>
-        <Box>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>작성자</FormLabel>
-            <Input onChange={(e) => setWriter(e.target.value)} />
+            <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
           </FormControl>
-        </Box>
-        <Box>
           <Button
             isLoading={loading}
             isDisabled={disableSaveButton}
-            colorScheme={"blue"}
+            colorScheme="blue"
             onClick={handleSaveClick}
+            width="100%"
           >
             저장
           </Button>
-        </Box>
+        </VStack>
       </Box>
-    </Box>
+    </Center>
   );
 }
