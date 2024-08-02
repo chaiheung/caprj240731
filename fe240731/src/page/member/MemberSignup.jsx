@@ -321,6 +321,7 @@ export function MemberSignup(props) {
         <Button
           mt={5}
           width={"100%"}
+          height={"50px"}
           isDisabled={!isFormValid}
           cursor={!isFormValid ? "not-allowed" : "pointer"}
           colorScheme="blue"

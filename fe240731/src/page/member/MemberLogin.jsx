@@ -67,7 +67,7 @@ export function MemberLogin(props) {
         // 토큰을 로컬 스토리지에 저장
         localStorage.setItem("memberInfo", JSON.stringify(memberInfo));
 
-        navigate("/");
+        navigate("/board/list");
       } else {
         setError("로그인에 실패했습니다.");
       }
@@ -121,11 +121,11 @@ export function MemberLogin(props) {
             </FormControl>
             <Box mt={5}>
               <Button
+                mt={5}
                 width={"100%"}
                 height={"50px"}
-                bg={"#E6E6FA"}
-                color="purple"
-                _hover={{ bg: "#DCD0FF" }}
+                colorScheme="blue"
+                _hover={{ bgColor: "blue.600 ", color: "yellow.400" }}
                 onClick={handleLogin}
                 isLoading={isLoading}
               >

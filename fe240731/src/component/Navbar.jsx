@@ -65,7 +65,7 @@ export function Navbar() {
                 fontWeight="semibold"
                 fontSize="lg"
               >
-                로그아웃
+                LOGOUT
               </Text>
             </>
           ) : (
@@ -76,7 +76,7 @@ export function Navbar() {
               fontWeight="semibold"
               fontSize="lg"
             >
-              로그인
+              LOGIN
             </Text>
           )}
         </HStack>
