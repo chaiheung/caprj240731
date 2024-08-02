@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Alert,
   AlertIcon,
@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function MemberLogin(props) {
   const [username, setUsername] = useState("");
@@ -22,9 +23,9 @@ export function MemberLogin(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  // const { setMemberInfo } = useContext(LoginContext);
+  const { setMemberInfo } = useContext(LoginContext);
 
-  function handleLogin(event) {
+  async function handleLogin(event) {
     if (event) event.preventDefault(); // form submit 방지
 
     setIsLoading(true);
@@ -48,7 +49,7 @@ export function MemberLogin(props) {
       formData.append("username", username);
       formData.append("password", password);
 
-      const response = axios.post("/api/member/login", formData, {
+      const response = await axios.post("/api/member/login", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
