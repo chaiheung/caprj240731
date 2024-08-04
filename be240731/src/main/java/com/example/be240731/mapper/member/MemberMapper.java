@@ -1,9 +1,7 @@
 package com.example.be240731.mapper.member;
 
 import com.example.be240731.dto.member.Member;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MemberMapper {
@@ -29,4 +27,27 @@ public interface MemberMapper {
             WHERE nickname = #{nickname}
             """)
     Member selectByNickname(String nickname);
+
+    // MemberEdit
+    @Select("""
+            SELECT *
+            FROM member
+            WHERE id = #{id}
+            """)
+    Member selectByMemberId(Integer id);
+
+    @Update("""
+                UPDATE member
+                SET nickname = #{nickname},
+                    password = #{password},
+                WHERE id = #{id}
+            """)
+    int update(Member member);
+
+    // MemberDelete
+    @Delete("""
+            DELETE FROM member
+            WHERE id = #{id}
+            """)
+    int deleteById(Integer id);
 }

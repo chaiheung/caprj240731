@@ -1,4 +1,4 @@
-package com.example.be240731.security;
+package com.example.be240731.dto.member;
 
 import lombok.Data;
 

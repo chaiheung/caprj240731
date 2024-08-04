@@ -1,5 +1,6 @@
 package com.example.be240731.security;
 
+import com.example.be240731.mapper.member.RefreshMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,7 +45,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
             return;
         }
 
-        // Get refresh token
+        // refresh token
         String refresh = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -56,7 +57,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
             }
         }
 
-        // Refresh null check
+        // Refresh null 확인
         if (refresh == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
@@ -94,8 +95,8 @@ public class CustomLogoutFilter extends GenericFilterBean {
         Cookie cookie = new Cookie("refresh", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
-        cookie.setHttpOnly(true); // Optional, for security
-        cookie.setSecure(true); // Optional, if using HTTPS
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
 
         System.out.println("cookie.getMaxAge() = " + cookie.getMaxAge());
 

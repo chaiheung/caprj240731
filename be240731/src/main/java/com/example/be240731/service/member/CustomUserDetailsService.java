@@ -1,7 +1,8 @@
-package com.example.be240731.security;
+package com.example.be240731.service.member;
 
 import com.example.be240731.dto.member.Member;
 import com.example.be240731.mapper.member.MemberMapper;
+import com.example.be240731.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
