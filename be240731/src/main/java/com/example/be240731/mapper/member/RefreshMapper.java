@@ -28,4 +28,13 @@ public interface RefreshMapper {
             WHERE refresh = #{refresh}
             """)
     int deleteByRefresh(@Param("refresh") String refresh);
+
+    // 사용자 이름으로 Refresh 토큰 삭제
+    @Delete("""
+            DELETE FROM refresh_token
+            WHERE username = #{username}
+            """)
+    int deleteByUsername(@Param("username") String username);
+
+
 }
