@@ -3,14 +3,28 @@ import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import writeImage from "../../public/img/writelogo.png";
 import { LoginContext } from "./LoginProvider";
+import axios from "axios";
 
 export function Navbar() {
   const navigate = useNavigate();
   const { memberInfo, setMemberInfo } = useContext(LoginContext);
+  const nickname = memberInfo?.nickname || null;
 
-  const handleLogout = () => {
-    setMemberInfo(null);
-    navigate("/member/login");
+  const handleLogout = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("nickname", nickname);
+      const response = await axios.post("/api/member/logout", formData, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setMemberInfo(null);
+        localStorage.removeItem("memberInfo");
+        navigate("/member/login");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const handleClickLogo = () => {
@@ -49,7 +63,7 @@ export function Navbar() {
         >
           {memberInfo ? (
             <>
-              <Text
+              <Box
                 onClick={() => navigate("/board/write")}
                 cursor="pointer"
                 _hover={{ color: "yellow.400" }}
@@ -57,8 +71,17 @@ export function Navbar() {
                 fontSize="lg"
               >
                 글쓰기
-              </Text>
-              <Text
+              </Box>
+              <Box
+                onClick={() => navigate(`/member/page/${memberInfo.id}`)}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                {nickname}님
+              </Box>
+              <Box
                 onClick={handleLogout}
                 cursor="pointer"
                 _hover={{ color: "yellow.400" }}
@@ -66,7 +89,7 @@ export function Navbar() {
                 fontSize="lg"
               >
                 LOGOUT
-              </Text>
+              </Box>
             </>
           ) : (
             <Text
