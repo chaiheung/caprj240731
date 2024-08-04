@@ -194,7 +194,7 @@ export function MemberSignup(props) {
                   size={"sm"}
                   variant="ghost"
                   onClick={handleReenterUsername}
-                  _hover={{ color: "red.500 " }}
+                  _hover={{ color: "red.500" }}
                 >
                   <FontAwesomeIcon icon={faHammer} />
                 </Button>
@@ -207,7 +207,7 @@ export function MemberSignup(props) {
                   _hover={
                     !isUsernameValid
                       ? { bgColor: "gray.100" }
-                      : { bgColor: "purple.500 ", color: "white" }
+                      : { bgColor: "blue.600", color: "yellow.400" }
                   }
                 >
                   중복확인
@@ -240,7 +240,7 @@ export function MemberSignup(props) {
                   size={"sm"}
                   variant="ghost"
                   onClick={handleReenterNickname}
-                  _hover={{ color: "red.500 " }}
+                  _hover={{ color: "red.500" }}
                 >
                   <FontAwesomeIcon icon={faHammer} />
                 </Button>
@@ -253,7 +253,7 @@ export function MemberSignup(props) {
                   _hover={
                     !isNicknameValid
                       ? { bgColor: "gray.100" }
-                      : { bgColor: "purple.500 ", color: "white" }
+                      : { bgColor: "blue.600", color: "yellow.400" }
                   }
                 >
                   중복확인
