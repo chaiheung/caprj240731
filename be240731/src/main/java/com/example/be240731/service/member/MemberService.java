@@ -142,6 +142,9 @@ public class MemberService {
         // 각 게시물 지우기
         boardList.forEach(board -> boardService.delete(board.getId()));
 
+        refreshMapper.deleteByUsername(getById(id).getUsername());
+        memberMapper.deleteById(id);
+
     }
 
     public boolean validatePassword(Integer id, String password) {
