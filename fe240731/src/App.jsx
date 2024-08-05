@@ -2,6 +2,7 @@ import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./page/Home.jsx";
+import { MainPage } from "./page/MainPage.jsx";
 import { MemberSignup } from "./page/member/MemberSignup.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
 import { MemberPage } from "./page/member/MemberPage.jsx";
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     children: [
+      { index: true, element: <MainPage /> }, // 메인페이지 렌더링
       { path: "member/signup", element: <MemberSignup /> }, // 회원 가입
       { path: "member/login", element: <MemberLogin /> }, // 회원 로그인
       { path: "member/page/:id", element: <MemberPage /> }, // 회원 페이지

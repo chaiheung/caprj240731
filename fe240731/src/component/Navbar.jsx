@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Icon, Image, Text } from "@chakra-ui/react";
+import { FaHome } from "react-icons/fa";
 import React, { useContext } from "react";
 import writeImage from "../../public/img/writelogo.png";
 import { LoginContext } from "./LoginProvider";
@@ -46,21 +47,19 @@ export function Navbar() {
         borderRadius="md"
         height="60px"
       >
-        <Image
-          src={writeImage}
-          alt="Write"
-          height="30vh"
-          width="auto"
-          onClick={handleClickLogo}
-          cursor="pointer"
-          _hover={{ opacity: 0.8 }}
-          className="transition duration-300 ease-in-out"
-        />
-        <HStack
-          mr={50}
-          spacing={8}
-          className="transition duration-300 ease-in-out"
-        >
+        {memberInfo && (
+          <Image
+            src={writeImage}
+            alt="Write"
+            height="30vh"
+            width="auto"
+            onClick={handleClickLogo}
+            cursor="pointer"
+            _hover={{ opacity: 0.8 }}
+            className="transition duration-300 ease-in-out"
+          />
+        )}
+        <HStack spacing={8} className="transition duration-300 ease-in-out">
           {memberInfo ? (
             <>
               <Box
@@ -92,15 +91,26 @@ export function Navbar() {
               </Box>
             </>
           ) : (
-            <Text
-              onClick={() => navigate("/member/login")}
-              cursor="pointer"
-              _hover={{ color: "yellow.400" }}
-              fontWeight="semibold"
-              fontSize="lg"
-            >
-              LOGIN
-            </Text>
+            <HStack spacing={8}>
+              <Box
+                onClick={() => navigate("/")}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                <Icon as={FaHome} w={6} h={6} />
+              </Box>
+              <Text
+                onClick={() => navigate("/member/login")}
+                cursor="pointer"
+                _hover={{ color: "yellow.400" }}
+                fontWeight="semibold"
+                fontSize="lg"
+              >
+                LOGIN
+              </Text>
+            </HStack>
           )}
         </HStack>
       </Flex>
