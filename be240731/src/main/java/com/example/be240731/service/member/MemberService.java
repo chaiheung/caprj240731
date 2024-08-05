@@ -1,6 +1,5 @@
 package com.example.be240731.service.member;
 
-import com.example.be240731.dto.board.Board;
 import com.example.be240731.dto.member.Member;
 import com.example.be240731.dto.member.Profile;
 import com.example.be240731.dto.member.Role;
@@ -22,7 +21,6 @@ import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -136,11 +134,11 @@ public class MemberService {
 
     // MemberDelete
     public void delete(Integer id) {
-        //회원이 쓴 게시물 조회
-        List<Board> boardList = boardMapper.selectByMemberId(id);
-
-        // 각 게시물 지우기
-        boardList.forEach(board -> boardService.remove(board.getId()));
+//        //회원이 쓴 게시물 조회
+//        List<Board> boardList = boardMapper.selectByMemberId(id);
+//
+//        // 각 게시물 지우기
+//        boardList.forEach(board -> boardService.remove(board.getId()));
 
         refreshMapper.deleteByUsername(getById(id).getUsername());
         memberMapper.deleteById(id);

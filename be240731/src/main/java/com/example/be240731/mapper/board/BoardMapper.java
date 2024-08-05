@@ -28,13 +28,6 @@ public interface BoardMapper {
             """)
     Board selectById(Integer id);
 
-    @Select("""
-                        SELECT id
-                        FROM board
-                        WHERE member_id=#{id}
-            """)
-    List<Board> selectByMemberId(Integer id);
-
     @Update("""
             UPDATE board
             SET title=#{title},
