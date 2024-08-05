@@ -140,7 +140,7 @@ public class MemberService {
         List<Board> boardList = boardMapper.selectByMemberId(id);
 
         // 각 게시물 지우기
-        boardList.forEach(board -> boardService.delete(board.getId()));
+        boardList.forEach(board -> boardService.remove(board.getId()));
 
         refreshMapper.deleteByUsername(getById(id).getUsername());
         memberMapper.deleteById(id);
