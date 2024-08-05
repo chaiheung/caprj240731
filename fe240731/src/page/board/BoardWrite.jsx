@@ -16,16 +16,18 @@ import { useNavigate } from "react-router-dom";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [writer, setWriter] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
-  function handleClickSave() {
+  function handleSaveClick() {
     setLoading(true);
     axios
       .post("/api/board/create", {
         title,
         content,
+        writer,
       })
       .then(() => {
         toast({
@@ -47,7 +49,7 @@ export function BoardWrite() {
       .finally(() => setLoading(false));
   }
 
-  const isFormValid = title.trim() && content.trim();
+  const disableSaveButton = !title.trim() || !content.trim() || !writer.trim();
 
   return (
     <Center mt={5}>
@@ -64,17 +66,16 @@ export function BoardWrite() {
               onChange={(e) => setContent(e.target.value)}
             />
           </FormControl>
+          <FormControl isRequired>
+            <FormLabel>작성자</FormLabel>
+            <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
+          </FormControl>
           <Button
-            mt={5}
-            width={"100%"}
             isLoading={loading}
-            isDisabled={!isFormValid}
-            cursor={!isFormValid ? "not-allowed" : "pointer"}
+            isDisabled={disableSaveButton}
             colorScheme="blue"
-            _hover={
-              !isFormValid ? {} : { bgColor: "blue.600 ", color: "yellow.400" }
-            }
-            onClick={handleClickSave}
+            onClick={handleSaveClick}
+            width="100%"
           >
             저장
           </Button>

@@ -17,7 +17,9 @@ export function BoardList() {
         <Table variant="simple">
           <Thead>
             <Tr>
+              <Th>NO.</Th>
               <Th>TITLE</Th>
+              <Th>WRITER</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -27,7 +29,9 @@ export function BoardList() {
                 _hover={{ bgColor: "gray.100", cursor: "pointer" }}
                 onClick={() => navigate(`/board/${board.id}`)}
               >
+                <Td>{board.id}</Td>
                 <Td>{board.title}</Td>
+                <Td>{board.writer}</Td>
               </Tr>
             ))}
           </Tbody>

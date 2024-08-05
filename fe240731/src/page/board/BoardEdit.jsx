@@ -38,7 +38,7 @@ export function BoardEdit() {
       .then(() => {
         toast({
           status: "success",
-          description: `게시물이 수정되었습니다.`,
+          description: `${board.id}번 게시물이 수정되었습니다.`,
           position: "top",
           duration: 3000,
         });
@@ -81,6 +81,13 @@ export function BoardEdit() {
               onChange={(e) => setBoard({ ...board, content: e.target.value })}
             />
           </FormControl>
+          <FormControl>
+            <FormLabel>작성자</FormLabel>
+            <Input
+              value={board.writer}
+              onChange={(e) => setBoard({ ...board, writer: e.target.value })}
+            />
+          </FormControl>
           <Button colorScheme="blue" onClick={onOpen} width="100%">
             저장
           </Button>
@@ -90,7 +97,7 @@ export function BoardEdit() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>수정</ModalHeader>
+          <ModalHeader>게시물 수정</ModalHeader>
           <ModalBody>변경된 내용을 저장하시겠습니까?</ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
